@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Finance Tracker</string>
+    <string name="app_name">Keuanganku</string>
     <string name="total_balance">Saldo Total</string>
     <string name="income">Pemasukan</string>
     <string name="expense">Pengeluaran</string>
