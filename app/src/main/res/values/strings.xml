@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Finance Tracker</string>
+    <string name="total_balance">Saldo Total</string>
+    <string name="income">Pemasukan</string>
+    <string name="expense">Pengeluaran</string>
+    <string name="recent_transactions">Transaksi Terbaru</string>
+    <string name="add_transaction">Tambah Transaksi</string>
+    <string name="edit_transaction">Edit Transaksi</string>
+    <string name="save">Simpan</string>
+    <string name="cancel">Batal</string>
+    <string name="delete">Hapus</string>
+    <string name="delete_confirm">Apakah Anda yakin ingin menghapus transaksi ini?</string>
+    <string name="empty_state">Belum ada transaksi</string>
+</resources>

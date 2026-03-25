@@ -1,0 +1,20 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Firebase (google-services.json)
+# Sangat direkomendasikan untuk mengabaikan file ini jika menggunakan repository publik
+# agar kredensial API key Firebase Anda tidak disalahgunakan orang lain.
+**/google-services.json
