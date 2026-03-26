@@ -53,14 +53,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun addTransaction(transaction: Transaction) {
-        repository.addTransaction(transaction) { /* handle result if needed */ }
+        repository.addTransaction(transaction) { }
     }
 
     fun updateTransaction(transaction: Transaction) {
-        repository.updateTransaction(transaction) { /* handle result if needed */ }
+        repository.updateTransaction(transaction) { }
     }
 
     fun deleteTransaction(id: String) {
-        repository.deleteTransaction(id) { /* handle result if needed */ }
+        repository.deleteTransaction(id) { }
+    }
+    
+    fun logout() {
+        repository.logout()
     }
 }

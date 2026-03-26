@@ -2,6 +2,7 @@ package com.example.financetracker.data.model
 
 data class Transaction(
     var id: String = "",
+    val userId: String = "",
     val type: String = "", // "income" or "expense"
     val amount: Long = 0,
     val category: String = "",

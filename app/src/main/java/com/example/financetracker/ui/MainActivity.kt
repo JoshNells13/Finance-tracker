@@ -1,5 +1,6 @@
 package com.example.financetracker.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.financetracker.databinding.ActivityMainBinding
 import com.example.financetracker.databinding.DialogAddTransactionBinding
 import com.example.financetracker.ui.adapter.TransactionAdapter
 import com.example.financetracker.viewmodel.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
@@ -79,6 +81,23 @@ class MainActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener {
             showAddEditDialog(null)
         }
+        
+        binding.btnLogout.setOnClickListener {
+            showLogoutConfirmation()
+        }
+    }
+
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Keluar")
+            .setMessage("Apakah Anda yakin ingin keluar dari akun?")
+            .setPositiveButton("Keluar") { _, _ ->
+                viewModel.logout()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finishAffinity()
+            }
+            .setNegativeButton("Batal", null)
+            .show()
     }
 
     private fun showAddEditDialog(transaction: Transaction?) {

@@ -49,6 +49,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
     
     // Lifecycle & Coroutines
     implementation(libs.lifecycle.viewmodel.ktx)
