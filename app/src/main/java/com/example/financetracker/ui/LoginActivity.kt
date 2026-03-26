@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financetracker.databinding.ActivityLoginBinding
+import com.example.financetracker.util.NetworkUtils
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -26,6 +27,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                Toast.makeText(this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 

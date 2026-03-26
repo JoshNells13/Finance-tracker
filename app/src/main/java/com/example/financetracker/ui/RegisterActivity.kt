@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.financetracker.data.model.User
 import com.example.financetracker.databinding.ActivityRegisterBinding
+import com.example.financetracker.util.NetworkUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -22,6 +23,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
+            if (!NetworkUtils.isNetworkAvailable(this)) {
+                Toast.makeText(this, "Tidak ada koneksi internet", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             registerUser()
         }
 
@@ -45,7 +50,6 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        // Tampilkan loading (opsional: jika ada progress bar)
         binding.btnRegister.isEnabled = false
         binding.btnRegister.text = "Memproses..."
 
@@ -55,7 +59,6 @@ class RegisterActivity : AppCompatActivity() {
                     val uid = auth.currentUser?.uid ?: ""
                     val user = User(uid, name, email)
                     
-                    // Simpan ke Firestore
                     firestore.collection("users").document(uid).set(user)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Pendaftaran Berhasil!", Toast.LENGTH_SHORT).show()
@@ -70,7 +73,6 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     binding.btnRegister.isEnabled = true
                     binding.btnRegister.text = "Daftar Sekarang"
-                    // Menampilkan pesan error spesifik dari Firebase
                     val errorMessage = task.exception?.localizedMessage ?: "Terjadi kesalahan koneksi"
                     Toast.makeText(this, "Daftar Gagal: $errorMessage", Toast.LENGTH_LONG).show()
                 }
