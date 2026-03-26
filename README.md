@@ -61,4 +61,3 @@ service cloud.firestore {
 - `util`: Helper koneksi internet.
 
 ---
-Dibuat dengan ❤️ menggunakan Android Studio.
