@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(this, "Login Gagal: ${task.exception?.localizedMessage}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Login Gagal Pastikan Email Dan Password Tepat", Toast.LENGTH_LONG).show()
                     }
                 }
         }

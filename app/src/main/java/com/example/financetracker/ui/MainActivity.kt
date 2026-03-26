@@ -134,8 +134,10 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val newTransaction = Transaction(
+            // PERBAIKAN: Sertakan userId dan field asli lainnya saat membuat objek update
+            val updatedTransaction = Transaction(
                 id = transaction?.id ?: "",
+                userId = transaction?.userId ?: FirebaseAuth.getInstance().currentUser?.uid ?: "",
                 type = type,
                 amount = amountStr.toLong(),
                 category = category,
@@ -144,9 +146,9 @@ class MainActivity : AppCompatActivity() {
             )
 
             if (transaction == null) {
-                viewModel.addTransaction(newTransaction)
+                viewModel.addTransaction(updatedTransaction)
             } else {
-                viewModel.updateTransaction(newTransaction)
+                viewModel.updateTransaction(updatedTransaction)
             }
             dialog.dismiss()
         }
