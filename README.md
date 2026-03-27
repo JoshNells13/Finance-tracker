@@ -7,7 +7,7 @@ Aplikasi pencatat keuangan profesional yang dibangun menggunakan Android Studio 
 - **Data Terisolasi**: Setiap pengguna memiliki penyimpanan data pribadi yang terpisah.
 - **Dashboard Interaktif**: Ringkasan saldo, pemasukan, dan pengeluaran yang intuitif.
 - **Smart Analytics**:
-  - **Analisis Harian**: Peringatan otomatis "Boros" jika pengeluaran harian melebihi Rp 1.000.000.
+  - **Analisis Harian**: Peringatan otomatis "Boros" jika pengeluaran harian melebihi Rp 500.000.
   - **Analisis Pekanan**: Perbandingan tren pengeluaran minggu ini vs minggu lalu.
   - **Pola Pengeluaran**: Grafik persentase pengeluaran berdasarkan kategori.
 - **Real-time Sync**: Database sinkron instan menggunakan Firebase Firestore.
