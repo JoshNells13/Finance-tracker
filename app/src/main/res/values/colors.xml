@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#4CAF50</color>
+    <!-- Main Colors -->
+    <color name="primary">#4CAF50</color> <!-- Hijau Utama -->
     <color name="primary_dark">#388E3C</color>
-    <color name="accent">#8BC34A</color>
+    <color name="primary_light">#E8F5E9</color>
+
+    <!-- Backgrounds -->
+    <color name="bg_white">#FFFFFF</color>
+    <color name="surface_light">#F8F9FA</color>
+    <color name="divider">#EEEEEE</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="gray">#757575</color>
-    <color name="light_gray">#F5F5F5</color>
+
+    <!-- Accent Colors -->
     <color name="income">#4CAF50</color>
     <color name="expense">#F44336</color>
+    <color name="accent_green">#4CAF50</color>
+    <color name="accent_pink">#F44336</color>
+
+    <!-- Gradient & Glass -->
+    <color name="grad_start">#4CAF50</color>
+    <color name="grad_end">#81C784</color>
+    <color name="glass_green">#264CAF50</color> <!-- Hijau Transparan -->
+    <color name="glass_white">#CCFFFFFF</color>
+
+    <!-- Compatibility Colors (Added to fix build errors) -->
+    <color name="light_gray">#F5F5F5</color>
+    <color name="gray">#757575</color>
+    <color name="surface_dark">#FFFFFF</color> <!-- Changed to White for Light Theme -->
+    <color name="text_muted">#9E9E9E</color>
 </resources>

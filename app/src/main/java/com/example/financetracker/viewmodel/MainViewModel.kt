@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class MainViewModel : ViewModel() {
     private val repository = FirebaseRepository()
@@ -24,6 +25,17 @@ class MainViewModel : ViewModel() {
     private val _balance = MutableStateFlow(0L)
     val balance: StateFlow<Long> = _balance.asStateFlow()
 
+    // --- State untuk Analisis (Insights) ---
+    private val _categoryData = MutableStateFlow<Map<String, Long>>(emptyMap())
+    val categoryData: StateFlow<Map<String, Long>> = _categoryData.asStateFlow()
+
+    private val _weeklyGrowth = MutableStateFlow(0)
+    val weeklyGrowth: StateFlow<Int> = _weeklyGrowth.asStateFlow()
+
+    // --- State untuk Analisis Harian ---
+    private val _todayExpense = MutableStateFlow(0L)
+    val todayExpense: StateFlow<Long> = _todayExpense.asStateFlow()
+
     init {
         loadTransactions()
     }
@@ -33,6 +45,8 @@ class MainViewModel : ViewModel() {
             repository.getTransactions().collect { list ->
                 _transactions.value = list
                 calculateSummary(list)
+                calculateInsights(list)
+                calculateDaily(list)
             }
         }
     }
@@ -50,6 +64,41 @@ class MainViewModel : ViewModel() {
         _totalIncome.value = income
         _totalExpense.value = expense
         _balance.value = income - expense
+    }
+
+    private fun calculateDaily(list: List<Transaction>) {
+        val now = Calendar.getInstance()
+        val startOfDay = now.apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+
+        val todayTotal = list.filter { it.type == "expense" && it.date >= startOfDay }.sumOf { it.amount }
+        _todayExpense.value = todayTotal
+    }
+
+    private fun calculateInsights(list: List<Transaction>) {
+        val expenses = list.filter { it.type == "expense" }
+        val categoryMap = mutableMapOf<String, Long>()
+        expenses.forEach {
+            categoryMap[it.category] = (categoryMap[it.category] ?: 0L) + it.amount
+        }
+        _categoryData.value = categoryMap
+
+        val now = System.currentTimeMillis()
+        val oneWeekMs = 7 * 24 * 60 * 60 * 1000L
+        
+        val thisWeekExpense = expenses.filter { it.date > (now - oneWeekMs) }.sumOf { it.amount }
+        val lastWeekExpense = expenses.filter { it.date in (now - 2 * oneWeekMs)..(now - oneWeekMs) }.sumOf { it.amount }
+
+        if (lastWeekExpense > 0) {
+            val growth = ((thisWeekExpense - lastWeekExpense) * 100 / lastWeekExpense).toInt()
+            _weeklyGrowth.value = growth
+        } else {
+            _weeklyGrowth.value = 0
+        }
     }
 
     fun addTransaction(transaction: Transaction) {

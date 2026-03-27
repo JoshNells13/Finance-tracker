@@ -1,46 +1,44 @@
 # Keuanganku - Catatan Keuangan Pribadi 💰
 
-Aplikasi pencatat keuangan sederhana namun profesional yang dibangun menggunakan Android Studio dengan bahasa pemrograman Kotlin. Aplikasi ini dirancang untuk membantu pengguna mengelola pemasukan dan pengeluaran secara real-time.
+Aplikasi pencatat keuangan profesional yang dibangun menggunakan Android Studio dengan Kotlin. Membantu pengguna mengelola keuangan dengan fitur cerdas seperti analisis pengeluaran harian dan mingguan secara real-time.
 
 ## ✨ Fitur Utama
-- **Autentikasi Pengguna**: Login dan Register dengan Firebase Auth.
-- **Pemisahan Data**: Setiap pengguna hanya dapat melihat dan mengelola transaksi milik sendiri.
-- **Ringkasan Saldo**: Lihat Total Saldo, Pemasukan, dan Pengeluaran secara otomatis di dashboard.
-- **Manajemen Transaksi**: Tambah, Edit, dan Hapus transaksi (Pemasukan/Pengeluaran).
-- **Real-time Database**: Sinkronisasi instan menggunakan Firebase Firestore.
-- **Tampilan Minimalis**: Desain bersih dengan skema warna hijau profesional.
-- **Internet Check**: Mendeteksi dan memperingatkan jika tidak ada koneksi internet.
+- **Autentikasi Pengguna**: Login & Register aman menggunakan Firebase Authentication.
+- **Data Terisolasi**: Setiap pengguna memiliki penyimpanan data pribadi yang terpisah.
+- **Dashboard Interaktif**: Ringkasan saldo, pemasukan, dan pengeluaran yang intuitif.
+- **Smart Analytics**:
+  - **Analisis Harian**: Peringatan otomatis "Boros" jika pengeluaran harian melebihi Rp 1.000.000.
+  - **Analisis Pekanan**: Perbandingan tren pengeluaran minggu ini vs minggu lalu.
+  - **Pola Pengeluaran**: Grafik persentase pengeluaran berdasarkan kategori.
+- **Real-time Sync**: Database sinkron instan menggunakan Firebase Firestore.
+- **Keamanan Lanjutan**: Proteksi level database dengan Rules Firestore.
+- **UI Modern**: Desain minimalis dengan tema Hijau-Putih yang bersih dan profesional.
+- **Cek Koneksi**: Deteksi otomatis dan peringatan jika internet terputus.
 
 ## 🛠️ Tech Stack
 - **Bahasa**: [Kotlin](https://kotlinlang.org/)
-- **Arsitektur**: MVVM (Model-View-ViewModel)
-- **Database**: [Firebase Firestore](https://firebase.google.com/products/firestore)
-- **Auth**: [Firebase Authentication](https://firebase.google.com/products/auth)
-- **UI Framework**: XML Layout (ViewBinding)
+- **Arsitektur**: MVVM (Model-View-ViewModel) dengan Fragments.
+- **Backend**: Firebase (Auth & Firestore Database).
+- **UI**: XML Layout, Material Design 3, ViewBinding.
+- **Asynchrony**: Kotlin Coroutines & Flow.
 
-## 🚀 Cara Pemasangan (Setup)
+## 🚀 Panduan Setup
 
-### 1. Prasyarat
-- Android Studio Koala atau yang lebih baru.
-- Proyek di [Firebase Console](https://console.firebase.google.com/).
-
-### 2. Konfigurasi Firebase
-1. Tambahkan aplikasi Android dengan package name: `com.example.financetracker`.
-2. Download `google-services.json` dan letakkan di folder `app/`.
-3. Aktifkan **Email/Password** di Firebase Authentication.
-4. Aktifkan **Cloud Firestore** dan atur **Rules** sebagai berikut:
+### 1. Konfigurasi Firebase
+1. Buat proyek di [Firebase Console](https://console.firebase.google.com/).
+2. Daftarkan aplikasi Android (`com.example.financetracker`).
+3. Download `google-services.json` ke folder `app/`.
+4. Aktifkan **Email/Password Auth** dan **Cloud Firestore**.
+5. Salin **Security Rules** berikut ke tab Rules Firestore:
 
 ```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Rules untuk Transaksi
     match /transactions/{id} {
       allow read, write: if request.auth != null && request.auth.uid == (resource == null ? request.auth.uid : resource.data.userId);
       allow create: if request.auth != null;
     }
-    
-    // Rules untuk User Profile
     match /users/{userId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null && request.auth.uid == userId;
@@ -49,15 +47,16 @@ service cloud.firestore {
 }
 ```
 
-### 3. Menjalankan Aplikasi
-1. Lakukan **Gradle Sync** di Android Studio.
-2. Jalankan aplikasi di Emulator atau Perangkat Fisik.
+### 2. Menjalankan Aplikasi
+1. Clone repository ini.
+2. Buka di Android Studio.
+3. Tunggu Gradle Sync selesai.
+4. Klik **Run** pada Emulator atau Device fisik.
 
-## 📂 Struktur Folder Utama
-- `ui`: Aktivitas (Login, Register, Main) dan Adapter.
-- `data/model`: Data class `User` dan `Transaction`.
-- `data/repository`: Interaksi database Firebase.
-- `viewmodel`: Logika bisnis aplikasi.
-- `util`: Helper koneksi internet.
+## 📂 Struktur Project
+- `ui`: Aktivitas Utama, Fragments (Dashboard, Insights, Profile), dan Adapters.
+- `data`: Model data (`Transaction`, `User`) dan `FirebaseRepository`.
+- `viewmodel`: Logika bisnis dan pemrosesan data analisis.
+- `util`: Utility untuk koneksi internet.
 
 ---
